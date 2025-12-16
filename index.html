@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dead Vision | Tattoo Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Courier New', monospace;
+        background: #000;
+        color: #0f0;
+        line-height: 1.6;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .floating-symbols {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    .float-symbol {
+        position: absolute;
+        font-size: 2rem;
+        opacity: 0.1;
+        animation: floatUp 15s linear infinite;
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.1;
+        }
+        90% {
+            opacity: 0.1;
+        }
+        100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    .pixel-spider {
+        position: fixed;
+        font-size: 3rem;
+        z-index: 9998;
+        pointer-events: none;
+        text-shadow: 0 0 20px #0f0;
+        transition: all 0.1s linear;
+    }
+
+    .skull-counter {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: #000;
+        border: 3px solid #0f0;
+        padding: 1rem;
+        z-index: 1000;
+        box-shadow: 0 0 30px #0f0;
+        font-size: 1.2rem;
+        color: #0f0;
+        text-shadow: 0 0 10px #0f0;
+    }
+
+    header {
+        background: #000;
+        padding: 1.5rem 5%;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 3px solid #0f0;
+        box-shadow: 0 0 20px #0f0;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 4px;
+        color: #0f0;
+        text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+        animation: glitch 3s infinite;
+        cursor: pointer;
+    }
+
+    @keyframes glitch {
+        0%, 90%, 100% { 
+            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+            transform: translate(0);
+        }
+        92% { 
+            text-shadow: 0 0 10px #f00, 0 0 20px #f00, 2px 2px #0f0;
+            transform: translate(-2px, 2px);
+        }
+        94% {
+            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+            transform: translate(2px, -2px);
+        }
+        96% { 
+            text-shadow: 0 0 10px #f00, 0 0 20px #f00;
+            transform: translate(-2px, -2px);
+        }
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+
+    .nav-links a {
+        color: #0f0;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s;
+        text-shadow: 0 0 5px #0f0;
+    }
+
+    .nav-links a:hover {
+        color: #f00;
+        text-shadow: 0 0 10px #f00, 0 0 20px #f00;
+    }
+
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 8rem 5% 4rem;
+        background: #000;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .skull-bg {
+        position: absolute;
+        font-size: 15rem;
+        opacity: 0.1;
+        color: #0f0;
+        animation: float 6s ease-in-out infinite;
+        z-index: 0;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-30px) rotate(5deg); }
+    }
+
+    .chaos-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+
+    .chaos-symbol {
+        position: absolute;
+        font-size: 4rem;
+        opacity: 0.05;
+        animation: chaos 20s linear infinite;
+    }
+
+    @keyframes chaos {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(50px, 50px) rotate(90deg); }
+        50% { transform: translate(0, 100px) rotate(180deg); }
+        75% { transform: translate(-50px, 50px) rotate(270deg); }
+        100% { transform: translate(0, 0) rotate(360deg); }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero h1 {
+        font-size: 5rem;
+        margin-bottom: 1rem;
+        color: #0f0;
+        text-shadow: 0 0 20px #0f0, 0 0 40px #0f0, 0 0 60px #0f0;
+        animation: neonPulse 2s ease-in-out infinite;
+        letter-spacing: 8px;
+    }
+
+    @keyframes neonPulse {
+        0%, 100% { text-shadow: 0 0 20px #0f0, 0 0 40px #0f0; }
+        50% { text-shadow: 0 0 30px #0f0, 0 0 60px #0f0, 0 0 80px #0f0; }
+    }
+
+    .hero p {
+        font-size: 1.3rem;
+        color: #f00;
+        margin-bottom: 2rem;
+        text-shadow: 0 0 10px #f00;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 1rem 2.5rem;
+        background: #000;
+        color: #0f0;
+        text-decoration: none;
+        border: 3px solid #0f0;
+        font-weight: bold;
+        font-size: 1.2rem;
+        transition: all 0.3s;
+        text-shadow: 0 0 5px #0f0;
+        box-shadow: 0 0 20px #0f0;
+        letter-spacing: 2px;
+        cursor: pointer;
+    }
+
+    .cta-button:hover {
+        background: #0f0;
+        color: #000;
+        box-shadow: 0 0 30px #0f0, 0 0 50px #0f0;
+        text-shadow: none;
+    }
+
+    section {
+        padding: 5rem 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    h2 {
+        font-size: 3rem;
+        margin-bottom: 3rem;
+        text-align: center;
+        color: #0f0;
+        text-shadow: 0 0 20px #0f0;
+        letter-spacing: 4px;
+    }
+
+    .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .portfolio-item {
+        aspect-ratio: 1;
+        background: #000;
+        border: 3px solid #0f0;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 0 20px #0f0;
+    }
+
+    .portfolio-item:hover {
+        border-color: #f00;
+        box-shadow: 0 0 30px #f00;
+        transform: scale(1.05);
+    }
+
+    .portfolio-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .portfolio-item:before {
+        content: '💀';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4rem;
+        opacity: 0.3;
+        animation: spin 10s linear infinite;
+        z-index: 1;
+    }
+
+    .portfolio-item.has-image:before {
+        display: none;
+    }
+
+    @keyframes spin {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 2rem;
+        border: 3px solid #f00;
+        box-shadow: 0 0 30px #f00;
+        background: rgba(255, 0, 0, 0.05);
+    }
+
+    .about-content p {
+        font-size: 1.2rem;
+        color: #0f0;
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .service-card {
+        background: #000;
+        padding: 2rem;
+        text-align: center;
+        border: 3px solid #0f0;
+        transition: all 0.3s;
+        position: relative;
+        box-shadow: 0 0 20px #0f0;
+        cursor: pointer;
+    }
+
+    .service-card:hover {
+        border-color: #f00;
+        box-shadow: 0 0 30px #f00;
+        transform: translateY(-10px);
+    }
+
+    .service-card:before {
+        content: '🕷️';
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 2rem;
+        opacity: 0.3;
+        animation: crawl 5s ease-in-out infinite;
+    }
+
+    @keyframes crawl {
+        0%, 100% { transform: translate(0, 0); }
+        25% { transform: translate(-5px, 5px); }
+        50% { transform: translate(5px, 10px); }
+        75% { transform: translate(-5px, 5px); }
+    }
+
+    .service-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #0f0;
+        text-shadow: 0 0 10px #0f0;
+    }
+
+    .service-card p {
+        color: #0f0;
+    }
+
+    .contact-form {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border: 3px solid #0f0;
+        box-shadow: 0 0 30px #0f0;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #0f0;
+        text-shadow: 0 0 5px #0f0;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 1rem;
+        background: #000;
+        border: 2px solid #0f0;
+        color: #0f0;
+        font-family: 'Courier New', monospace;
+        transition: all 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #f00;
+        box-shadow: 0 0 20px #f00;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        background: #000;
+        color: #0f0;
+        border: 3px solid #0f0;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: 'Courier New', monospace;
+        text-shadow: 0 0 5px #0f0;
+        box-shadow: 0 0 20px #0f0;
+        letter-spacing: 2px;
+    }
+
+    .submit-btn:hover {
+        background: #0f0;
+        color: #000;
+        box-shadow: 0 0 30px #0f0, 0 0 50px #0f0;
+        text-shadow: none;
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    footer {
+        background: #000;
+        text-align: center;
+        padding: 2rem 5%;
+        border-top: 3px solid #0f0;
+        margin-top: 4rem;
+        box-shadow: 0 0 20px #0f0;
+    }
+
+    .snake-divider {
+        text-align: center;
+        font-size: 2rem;
+        margin: 3rem 0;
+        color: #0f0;
+        animation: slither 3s ease-in-out infinite;
+    }
+
+    @keyframes slither {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(20px) rotate(2deg); }
+        50% { transform: translateX(0) rotate(0deg); }
+        75% { transform: translateX(-20px) rotate(-2deg); }
+    }
+
+    .pixel-skull {
+        display: inline-block;
+        font-size: 3rem;
+        animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+        0%, 50%, 100% { opacity: 1; }
+        25%, 75% { opacity: 0.3; }
+    }
+
+    .scanline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 255, 0, 0.03) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(0, 255, 0, 0.03) 3px
+        );
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    .game-element {
+        display: inline-block;
+        margin: 1rem;
+        padding: 0.5rem 1rem;
+        border: 2px solid #0f0;
+        background: #000;
+        color: #0f0;
+        text-shadow: 0 0 5px #0f0;
+        font-size: 1rem;
+    }
+
+    .success-message {
+        display: none;
+        background: #000;
+        border: 3px solid #0f0;
+        padding: 2rem;
+        text-align: center;
+        color: #0f0;
+        text-shadow: 0 0 10px #0f0;
+        margin-top: 1rem;
+        box-shadow: 0 0 30px #0f0;
+    }
+
+    .success-message.show {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .nav-links {
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        .skull-bg {
+            font-size: 8rem;
+        }
+
+        .skull-counter {
+            top: 80px;
+            right: 10px;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="scanline"></div>
+    <div class="floating-symbols" id="floatingSymbols"></div>
+    <div class="pixel-spider" id="spider">🕷️</div>
+
+```
+<div class="skull-counter" id="skullCounter">
+    💀 SKULLS: <span id="count">0</span>
+</div>
+
+<header>
+    <nav>
+        <div class="logo" onclick="playSound('click')">☠ DEAD VISION ☠</div>
+        <ul class="nav-links">
+            <li><a href="#home" onclick="playSound('click')">HOME</a></li>
+            <li><a href="#portfolio" onclick="playSound('click')">PORTFOLIO</a></li>
+            <li><a href="#about" onclick="playSound('click')">ABOUT</a></li>
+            <li><a href="#services" onclick="playSound('click')">SERVICES</a></li>
+            <li><a href="#contact" onclick="playSound('click')">CONTACT</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <div class="chaos-bg">
+        <div class="chaos-symbol" style="top: 10%; left: 10%;">💀</div>
+        <div class="chaos-symbol" style="top: 20%; right: 15%; animation-delay: 2s;">🐍</div>
+        <div class="chaos-symbol" style="bottom: 15%; left: 20%; animation-delay: 4s;">🕷️</div>
+        <div class="chaos-symbol" style="top: 60%; right: 10%; animation-delay: 6s;">☠️</div>
+        <div class="chaos-symbol" style="bottom: 30%; right: 30%; animation-delay: 8s;">🦴</div>
+    </div>
+    <div class="skull-bg">💀</div>
+    <div class="hero-content">
+        <div class="pixel-skull">☠️</div>
+        <h1>DEAD VISION</h1>
+        <p>>>> ELITE INK FOR THE UNDEAD <<<</p>
+        <div class="game-element">🎮 LEVEL: LEGENDARY</div>
+        <div class="game-element">⚡ STATUS: ONLINE</div>
+        <div class="snake-divider">🐍═══════════🐍</div>
+        <a href="#contact" class="cta-button" onclick="playSound('powerup')">[ BOOK NOW ]</a>
+    </div>
+</section>
+
+<div class="snake-divider">🕷️═══🐍═══🕷️═══🐍═══🕷️</div>
+
+<section id="portfolio">
+    <h2>[ PORTFOLIO ]</h2>
+    <div class="portfolio-grid">
+        <!-- 
+        ═══════════════════════════════════════════════════════════════
+        📸 ADD YOUR TATTOO PHOTOS HERE!
+        ═══════════════════════════════════════════════════════════════
+        
+        INSTRUCTIONS:
+        1. Upload your tattoo photos to Imgur.com (free, no account needed)
+        2. Right-click each image → "Copy image address"
+        3. Paste the URL inside the src="" quotes below
+        4. Replace "YOUR_IMAGE_URL_HERE" with your actual image links
+        
+        Example:
+        <img src="https://i.imgur.com/abc123.jpg" alt="Tattoo 1">
+        
+        Keep the onclick="collectSkull(event)" - that's for the game!
+        ═══════════════════════════════════════════════════════════════
+        -->
+        <div class="portfolio-item" onclick="collectSkull(event)">
+            <!-- <img src="https://imgur.com/a/n30cZ3g" alt="Tattoo 1"> -->
+        </div>
+        <div class="portfolio-item" onclick="collectSkull(event)">
+            <!-- <img src="YOUR_IMAGE_URL_HERE" alt="Tattoo 2"> -->
+        </div>
+        <div class="portfolio-item" onclick="collectSkull(event)">
+            <!-- <img src="YOUR_IMAGE_URL_HERE" alt="Tattoo 3"> -->
+        </div>
+        <div class="portfolio-item" onclick="collectSkull(event)">
+            <!-- <img src="YOUR_IMAGE_URL_HERE" alt="Tattoo 4"> -->
+        </div>
+        <div class="portfolio-item" onclick="collectSkull(event)">
+            <!-- <img src="YOUR_IMAGE_URL_HERE" alt="Tattoo 5"> -->
+        </div>
+        <div class="portfolio-item" onclick="collectSkull(event)">
+            <!-- <img src="YOUR_IMAGE_URL_HERE" alt="Tattoo 6"> -->
+        </div>
+    </div>
+</section>
+
+<div class="snake-divider">🐍═══🕷️═══🐍═══🕷️═══🐍</div>
+
+<section id="about">
+    <h2>[ ABOUT DEAD VISION ]</h2>
+    <div class="about-content">
+        <p>💀 Welcome to the darkside. I'm DEAD, and this is DEAD VISION - where your nightmares become art. 💀</p>
+        <p>🐍 We specialize in sick custom pieces that push the limits. Every tattoo tells a story - make yours legendary. 🐍</p>
+        <p>🕷️ No basic ink here. Only premium work for those who dare to be different. 🕷️</p>
+        <div class="game-element">🏆 ACHIEVEMENT: MASTER ARTIST UNLOCKED</div>
+    </div>
+</section>
+
+<div class="snake-divider">🕷️═══💀═══🕷️═══💀═══🕷️</div>
+
+<section id="services">
+    <h2>[ SERVICES ]</h2>
+    <div class="services-grid">
+        <div class="service-card" onclick="playSound('select')">
+            <h3>CUSTOM DESIGNS</h3>
+            <p>Original artwork crafted from your darkest visions</p>
+        </div>
+        <div class="service-card" onclick="playSound('select')">
+            <h3>COVER-UPS</h3>
+            <p>Transform old regrets into fresh nightmares</p>
+        </div>
+        <div class="service-card" onclick="playSound('select')">
+            <h3>BLACK & GREY</h3>
+            <p>Classic darkness with killer detail</p>
+        </div>
+        <div class="service-card" onclick="playSound('select')">
+            <h3>COLOR WORK</h3>
+            <p>Bold colors that scream louder than death</p>
+        </div>
+    </div>
+</section>
+
+<div class="snake-divider">🐍═══💀═══🐍═══💀═══🐍</div>
+
+<section id="contact">
+    <h2>[ BOOK YOUR SESSION ]</h2>
+    
+    <!-- 
+    ═══════════════════════════════════════════════════════════════
+    📧 FORMSPREE SETUP - READ THIS!
+    ═══════════════════════════════════════════════════════════════
+    
+    STEP 1: Go to formspree.io and create a free account
+    STEP 2: Create a new form and copy your form endpoint
+    STEP 3: Replace "YOUR_FORMSPREE_ENDPOINT" below with your actual endpoint
+    
+    It will look like: https://formspree.io/f/xyzabc123
+    
+    Example:
+    <form action="https://formspree.io/f/xyzabc123" method="POST">
+    
+    That's it! Submissions will be sent to your email automatically.
+    ═══════════════════════════════════════════════════════════════
+    -->
+    
+    <form class="contact-form" id="contactForm" action="YOUR_FORMSPREE_ENDPOINT" method="POST">
+        <div class="form-group">
+            <label for="name">>>> NAME:</label>
+            <input type="text" id="name" name="name" required onfocus="playSound('click')">
+        </div>
+        <div class="form-group">
+            <label for="email">>>> EMAIL:</label>
+            <input type="email" id="email" name="email" required onfocus="playSound('click')">
+        </div>
+        <div class="form-group">
+            <label for="phone">>>> PHONE:</label>
+            <input type="tel" id="phone" name="phone" onfocus="playSound('click')">
+        </div>
+        <div class="form-group">
+            <label for="message">>>> DESCRIBE YOUR VISION:</label>
+            <textarea id="message" name="message" required onfocus="playSound('click')"></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">[ SUBMIT REQUEST ]</button>
+    </form>
+    
+    <div class="success-message" id="successMessage">
+        <h3 style="color: #0f0; text-shadow: 0 0 20px #0f0;">🎮 QUEST ACCEPTED! 💀</h3>
+        <p>Your booking request has been sent! I'll get back to you soon.</p>
+        <p style="color: #f00; text-shadow: 0 0 10px #f00; margin-top: 1rem;">+10 SKULLS BONUS! 🔥</p>
+    </div>
+</section>
+
+<footer>
+    <div class="snake-divider">💀🐍🕷️💀🐍🕷️💀</div>
+    <p style="color: #0f0; text-shadow: 0 0 10px #0f0;">© 2025 DEAD VISION | ALL RIGHTS RESERVED</p>
+    <p style="color: #f00; text-shadow: 0 0 10px #f00; margin-top: 1rem;">☠️ BULLHEAD CITY ☠️</p>
+    <div class="game-element" style="margin-top: 1rem;">FINAL SCORE: <span id="finalScore">0</span></div>
+</footer>
+
+<script>
+    // Sound effects using Web Audio API
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    function playSound(type) {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        switch(type) {
+            case 'click':
+                oscillator.frequency.value = 800;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+                break;
+            case 'powerup':
+                oscillator.frequency.value = 400;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.2);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+                break;
+            case 'collect':
+                oscillator.frequency.value = 1000;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.15);
+                break;
+            case 'select':
+                oscillator.frequency.value = 600;
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+                break;
+        }
+    }
+
+    // Skull counter game
+    let skullCount = 0;
+    
+    function collectSkull(event) {
+        skullCount++;
+        document.getElementById('count').textContent = skullCount;
+        document.getElementById('finalScore').textContent = skullCount * 100;
+        playSound('collect');
+        
+        // Visual feedback
+        event.currentTarget.style.borderColor = '#f00';
+        setTimeout(() => {
+            event.currentTarget.style.borderColor = '#0f0';
+        }, 200);
+    }
+
+    // Animated spider following cursor
+    const spider = document.getElementById('spider');
+    let spiderX = 0;
+    let spiderY = 0;
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function moveSpider() {
+        const dx = mouseX - spiderX;
+        const dy = mouseY - spiderY;
+        
+        spiderX += dx * 0.05;
+        spiderY += dy * 0.05;
+        
+        spider.style.left = spiderX + 'px';
+        spider.style.top = spiderY + 'px';
+        
+        requestAnimationFrame(moveSpider);
+    }
+    moveSpider();
+
+    // Floating symbols background
+    const symbols = ['💀', '🐍', '🕷️', '☠️', '🦴', '⚡', '🔥'];
+    const floatingContainer = document.getElementById('floatingSymbols');
+
+    function createFloatingSymbol() {
+        const symbol = document.createElement('div');
+        symbol.className = 'float-symbol';
+        symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        symbol.style.left = Math.random() * 100 + '%';
+        symbol.style.animationDuration = (10 + Math.random() * 10) + 's';
+        symbol.style.animationDelay = Math.random() * 5 + 's';
+        floatingContainer.appendChild(symbol);
+        
+        setTimeout(() => {
+            symbol.remove();
+        }, 20000);
+    }
+
+    // Create initial symbols
+    for (let i = 0; i < 15; i++) {
+        setTimeout(createFloatingSymbol, i * 500);
+    }
+
+    // Keep creating symbols
+    setInterval(createFloatingSymbol, 2000);
+
+    // Form submission with Formspree
+    const form = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Play sound
+        playSound('powerup');
+        
+        // Disable button
+        submitBtn.disabled = true;
+        submitBtn.textContent = '[ SENDING... ]';
+        
+        // Get form data
+        const formData = new FormData(form);
+        
+        try {
+            // Submit to Formspree
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                // Show success message
+                successMessage.classList.add('show');
+                form.reset();
+                
+                // Add bonus skulls
+                skullCount += 10;
+                document.getElementById('count').textContent = skullCount;
+                document.getElementById('finalScore').textContent = skullCount * 100;
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+            } else {
+                alert('Oops! Something went wrong. Please try again.');
+            }
+        } catch (error) {
+            alert('Oops! Something went wrong. Please try again.');
+        }
+        
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.textContent = '[ SUBMIT REQUEST ]';
+    });
+
+    // Add click sound to all clickable elements
+    document.querySelectorAll('a, button, .service-card, .portfolio-item').forEach(el => {
+        if (!el.onclick) {
+            el.addEventListener('click', () => playSound('click'));
+        }
+    });
+
+    // Check if images are loaded and add class
+    document.querySelectorAll('.portfolio-item img').forEach(img => {
+        if (img.complete) {
+            img.parentElement.classList.add('has-image');
+        }
+        img.addEventListener('load', function() {
+            this.parentElement.classList.add('has-image');
+        });
+    });
+</script>
+```
+
+</body>
+</html>
